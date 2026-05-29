@@ -1,0 +1,27 @@
+# Data manifest.
+#
+# This demo runs on a SYNTHETIC Perturb-seq screen generated in-process
+# (perturbresp.synth.generate) — no download is required and `make run` needs
+# no network. No real data is present in this repository.
+#
+# This file documents the public single-cell perturbation datasets and methods
+# the approach targets, so the capability claim is legible.
+
+datasets:
+  - name: norman-2019-perturb-seq
+    platform: Perturb-seq (CRISPRa)
+    use: response prediction across genetic perturbations + combinations
+    doi: 10.1126/science.aax4438
+    license: per-publication open access
+
+  - name: replogle-2022-genome-scale
+    platform: Perturb-seq (CRISPRi, genome-scale)
+    use: large-scale perturbation effect atlas
+    doi: 10.1016/j.cell.2022.05.013
+    license: per-publication open access
+
+# Reference perturbation-modeling methods (public; this repo is a transparent
+# linear baseline, not these):
+#   GEARS    -- Roohani et al., Nat Biotechnol 2024 (graph-based response prediction)
+#   CPA      -- Lotfollahi et al., Mol Syst Biol 2023 (compositional perturbation autoencoder)
+#   scGen    -- Lotfollahi et al., Nat Methods 2019 (latent-space response prediction)
