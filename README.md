@@ -95,6 +95,18 @@ make canary      # deterministic program-recovery check
     └── release-notes/v0.1.md
 ```
 
+## Interpretability
+
+`scripts/interpret_perturb.py` (→ `audit/feature_importance.md`) makes the ridge
+feature→response model legible: per-feature importance is the aggregated
+\|coefficient\| across gene outputs. Because the data is synthetic we can validate
+it against ground truth — the importance ranking learned from the *noisy observed*
+delta matches the ranking implied by the *true* generative delta at **Spearman
+0.976**, evidence the model recovered the real feature→response structure rather
+than fitting noise (alongside the native effect-size-ranking Spearman 0.986 and
+program-recovery F1 0.989). Synthetic and small (8-dim embedding), so this is a
+legibility / structure-recovery check, not a feature-selection claim on real data.
+
 ## On real data
 
 The demo is synthetic; the code is written against a real-data shape. To adapt:
