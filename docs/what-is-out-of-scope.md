@@ -25,6 +25,13 @@ honest about what it is and is not.
 - **Statistical-power / benchmark claims.** The reported F1, Spearman, and
   held-out correlation describe the synthetic demo only; they are an existence
   proof that the method runs end to end, not a real-screen benchmark.
+- **Classifier-style probability calibration (ECE / temperature scaling).** The
+  held-out task is regression (per-perturbation response correlation), not
+  classification, so the classifier-style ECE diagnostic used in `dmoi-brca-poc`
+  and `multiqc-foundation-gate` does not apply; the appropriate analogue is
+  prediction-interval coverage, which is deferred. Interpretability is instead
+  provided by the ridge feature-attribution diagnostic
+  (`scripts/interpret_perturb.py` → `audit/feature_importance.md`).
 
 ## How to add an item
 
