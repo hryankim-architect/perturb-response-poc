@@ -1,6 +1,6 @@
 # Architecture
 
-One Python process, three method modules, three substrate hooks — the same
+One Python process, three method modules, three substrate hooks, the same
 house style as the rest of the capability-portrait portfolio.
 
 ## Control flow
@@ -32,7 +32,7 @@ house style as the rest of the capability-portrait portfolio.
 ## Why two tasks (and why the held-out one matters)
 
 Recovering a *seen* perturbation's program is just differential expression vs
-control — easy, and a useful sanity check (F1 ≈ 0.99 here). The task that
+control, easy, and a useful sanity check (F1 ≈ 0.99 here). The task that
 actually tests a model is predicting the response of a perturbation it has never
 seen. By deriving the synthetic response programs linearly from a perturbation
 feature embedding, the screen has *learnable cross-perturbation structure*, and

@@ -8,7 +8,7 @@
 > are present in this repository.
 
 **What this shows**: the perturbation-biology axis of single-cell analysis
-(Perturb-seq style) — (1) **effect recovery**, recovering each perturbation's
+(Perturb-seq style), (1) **effect recovery**, recovering each perturbation's
 transcriptional response program (its differentially expressed genes vs control)
 and ranking perturbations by effect size; and (2) **held-out perturbation
 response prediction**, learning a map from a perturbation's features to its mean
@@ -23,8 +23,8 @@ network and no GPU. Everything is seeded.
 (no-op when no server is configured), and exposes a deterministic canary the lab
 monitoring layer probes daily.
 
-**Production framing**: methods in this class — perturbation effect modeling and
-response prediction (GEARS, CPA, scGen) — are applied to real Perturb-seq screens
+**Production framing**: methods in this class, perturbation effect modeling and
+response prediction (GEARS, CPA, scGen), are applied to real Perturb-seq screens
 in practice. This repository implements a transparent **linear baseline** of the
 method and the engineering on synthetic data. See
 [`docs/what-is-out-of-scope.md`](docs/what-is-out-of-scope.md).
@@ -51,16 +51,16 @@ method and the engineering on synthetic data. See
 |---|---|
 | Program recovery F1 (DE vs ground-truth response program) | **0.989** |
 | Effect-size ranking Spearman (vs ground truth) | **0.986** |
-| Held-out perturbation response correlation — **ridge model** | **0.598** |
-| Held-out perturbation response correlation — mean baseline | 0.045 |
+| Held-out perturbation response correlation, **ridge model** | **0.598** |
+| Held-out perturbation response correlation, mean baseline | 0.045 |
 | Feature-signal lift (model − baseline) | **+0.553** |
 
-Honest reading: recovering a *seen* perturbation's program from differential
-expression is easy (F1 ≈ 0.99). The meaningful claim is the **held-out** task —
+Reading: recovering a *seen* perturbation's program from differential
+expression is easy (F1 ≈ 0.99). The meaningful claim is the **held-out** task,
 predicting the response of perturbations the model never trained on. There the
 linear feature→response model reaches 0.60 correlation versus 0.04 for a mean
 baseline, so the feature signal clearly generalizes; a 0.60 correlation is a
-modest, honest number for a hard task, not a solved problem. These describe
+modest number for a hard task, not a solved problem. These describe
 *this synthetic dataset*, not a real-screen benchmark.
 
 ## Quickstart

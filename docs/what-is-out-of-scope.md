@@ -18,7 +18,7 @@ honest about what it is and is not.
 - **Perturbation combinations / epistasis** (predicting double-perturbation
   responses from singles). Single perturbations only in v0.1.
 - **Real Perturb-seq file formats** (AnnData h5ad) and the `[perturb]` stack
-  (scanpy / anndata) — documented as the real-data path, not exercised in the
+  (scanpy / anndata), documented as the real-data path, not exercised in the
   synthetic demo.
 - **Guide / MOI / knockdown-efficiency modeling.** Each perturbation is treated
   as a clean label; real screens have variable guide efficiency and multiplicity.
