@@ -1,57 +1,59 @@
 # Architecture
 
-One Python process, three method modules, three substrate hooks.
+One Python process. Three analysis modules. Three optional substrate hooks.
 
 ## Control flow
 
 ```
-                make run / scripts/run_lab.sh
-                          │
-                          ▼
-              perturbresp.pipeline.run_pipeline
-                          │
-        ┌─────────────────┼──────────────────────────────┐
-        ▼                 ▼                               ▼
-  audit.emit         tracking.run        synth.generate → effect.observed_delta
- (NDJSON +         (MLflow active run,    → program F1 / effect ranking
-  optional POST)    no-op if unset)       → predict.heldout_prediction
-                          │
-                          ▼
-              artifacts/<name>.json  (effect recovery + held-out prediction)
+make run  (or  scripts/run_lab.sh)
+  |
+  v
+perturbresp.pipeline.run_pipeline
+  |
+  +-- audit.emit          writes to audit/local-demo.ndjson;
+  |                       POSTs to http://$AUDIT_HOST/events if set
+  |
+  +-- tracking.run        opens an MLflow run; silently skips if
+  |                       MLFLOW_TRACKING_URI is not set
+  |
+  +-- synth.generate
+        |
+        v
+      effect.observed_delta   --> program recovery F1 + effect-size Spearman
+        |
+        v
+      predict.heldout_prediction  --> ridge CV correlation vs mean baseline
+        |
+        v
+      artifacts/<name>.json
 ```
 
 ## Method modules
 
 | Module | Responsibility |
 |---|---|
-| `synth.py` | Deterministic Perturb-seq screen: control + perturbed cells, a per-perturbation feature embedding, and a ground-truth response program derived linearly + sparsely from the features (so feature→response generalization is learnable). |
-| `effect.py` | Per-perturbation mean expression shift vs control; recover the response program by thresholding (F1 vs ground truth); rank perturbations by effect-size L2 norm (Spearman vs ground truth). |
-| `predict.py` | Ridge regression mapping perturbation features → response delta, evaluated by leave-out-perturbation cross-validation; reports model correlation, a mean-response baseline, and their difference. |
+| `synth.py` | Builds a deterministic synthetic Perturb-seq screen: control cells, perturbed cells, a per-perturbation feature embedding, and ground-truth sparse response programs derived linearly from those features so that cross-perturbation generalization is learnable. |
+| `effect.py` | Computes per-perturbation mean expression shift vs control. Recovers the response program by thresholding the shift (F1 vs ground truth). Ranks perturbations by effect-size L2 norm (Spearman vs ground truth). |
+| `predict.py` | Fits a ridge regression from perturbation features to response delta. Evaluates with leave-out-perturbation cross-validation. Reports model correlation, a mean-response baseline, and the lift between them. |
 
-## Why two tasks (and why the held-out one matters)
+## Why two tasks, and why the held-out one matters
 
-Recovering a *seen* perturbation's program is just differential expression vs
-control, easy, and a useful sanity check (F1 ≈ 0.99 here). The task that
-actually tests a model is predicting the response of a perturbation it has never
-seen. By deriving the synthetic response programs linearly from a perturbation
-feature embedding, the screen has *learnable cross-perturbation structure*, and
-the leave-out-perturbation CV measures whether a model captures it. Reporting the
-mean-response baseline alongside keeps the claim honest: the feature signal is
-shown to lift correlation from ~0.04 to ~0.60, not asserted.
+Recovering a seen perturbation's program is straightforward differential expression vs control. It is a useful sanity check (F1 ≈ 0.99 here) but tells you little about generalization. The harder task is predicting the response for a perturbation the model has not seen during training. The synthetic screen is designed to make this solvable: response programs are derived linearly from the feature embedding, so cross-perturbation structure is real and learnable. Leave-out-perturbation CV measures whether a model finds it. Reporting the mean-response baseline alongside the ridge result shows the feature signal concretely (correlation lifts from ~0.04 to ~0.60 in the synthetic demo) rather than just asserting it.
 
-## Substrate integration
+## Audit ledger mechanics
 
-| Channel | Module | Env var | Behaviour when unset |
+Each pipeline run appends one NDJSON entry to `audit/local-demo.ndjson`. The entry's `prev_hash` field holds the SHA-256 of the previous entry's canonical JSON encoding (keys sorted, no extra whitespace). The first entry in an empty ledger uses 64 zero hex digits as a sentinel. Replaying the chain with `audit.verify()` detects any gap or modification. The local file is the source of truth; the remote POST to `AUDIT_HOST` is best-effort and pipeline-non-fatal.
+
+## Substrate hooks at a glance
+
+| Channel | Module | Env var | When unset |
 |---|---|---|---|
-| Audit | `audit` | `AUDIT_HOST` | local NDJSON only (source of truth) |
-| MLflow | `tracking` | `MLFLOW_TRACKING_URI` | no-op |
-| Canary | `canary` | `PERTURBRESP_CANARY_FIXTURE` | uses the bundled fixture |
+| Audit log | `audit` | `AUDIT_HOST` | writes local NDJSON only |
+| Experiment tracking | `tracking` | `MLFLOW_TRACKING_URI` | skipped silently |
+| Invariant check | `canary` | `PERTURBRESP_CANARY_FIXTURE` | uses the bundled fixture |
 
-The canary asserts the core invariant (DE recovers the ground-truth program
-above a floor F1) in well under a second.
+The canary re-runs differential expression on the fixture data and asserts that program-recovery F1 clears a minimum threshold. It completes in well under a second and runs in CI on every push.
 
-## What this architecture intentionally avoids
+## Deliberate omissions
 
-No deep generative model (CPA / scGen / GEARS), no GPU, no graph priors, and no
-real Perturb-seq file formats. The point is a transparent, deterministic linear
-baseline with measurable invariants, runnable on a laptop.
+No deep generative model (CPA, scGen, GEARS), no GPU requirement, no graph priors, and no real Perturb-seq file formats (AnnData h5ad). This is a transparent, deterministic linear baseline with measurable invariants. It runs on a laptop with `make install && make run`.

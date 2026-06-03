@@ -34,5 +34,6 @@ Explicit boundaries for this repo. Kept small so that new additions require a de
 
 ## How to add an item
 
-Open a PR that adds the item here with a one-sentence reason and a link to the
-proposing issue. The friction is intentional.
+Open a PR. Add the item to this list, one sentence explaining why it belongs here,
+and a link to the issue that proposed it. Requiring a PR keeps the boundary
+explicit and makes every expansion a recorded decision.
