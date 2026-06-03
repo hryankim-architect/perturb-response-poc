@@ -1,6 +1,6 @@
 # `perturb-response-poc`
 
-![ci](https://github.com/hryankim-architect/perturb-response-poc/actions/workflows/ci.yml/badge.svg) ![english-only](https://github.com/hryankim-architect/perturb-response-poc/actions/workflows/english-only.yml/badge.svg)
+![ci](https://github.com/hryankim-architect/perturb-response-poc/actions/workflows/ci.yml/badge.svg)
 
 > All data is synthetic and deterministically generated. No patient data and no proprietary code or parameters are present in this repository.
 
@@ -72,7 +72,6 @@ make canary      # deterministic program-recovery check
 ├── LICENSE                      # MIT
 ├── Makefile
 ├── pyproject.toml               # [perturb] extra = scanpy/anndata
-├── .github/workflows/           # ci.yml + english-only.yml
 ├── data/manifest.yaml           # public Perturb-seq datasets + methods targeted
 ├── src/perturbresp/
 │   ├── synth.py                 # deterministic Perturb-seq screen + ground-truth programs
