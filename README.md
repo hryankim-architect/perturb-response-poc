@@ -2,10 +2,7 @@
 
 ![ci](https://github.com/hryankim-architect/perturb-response-poc/actions/workflows/ci.yml/badge.svg) ![english-only](https://github.com/hryankim-architect/perturb-response-poc/actions/workflows/english-only.yml/badge.svg)
 
-> **Capability portrait, not a research result.** All data is synthetic and
-> deterministically generated; the demo is byte-reproducible on a single
-> workstation in seconds. No patient data and no proprietary code or parameters
-> are present in this repository.
+> All data is synthetic and deterministically generated. No patient data and no proprietary code or parameters are present in this repository.
 
 **What this shows**: the perturbation-biology axis of single-cell analysis
 (Perturb-seq style), (1) **effect recovery**, recovering each perturbation's
@@ -19,15 +16,9 @@ than asserted.
 **Reproducibility**: `make run` produces the metrics artifact in seconds, no
 network and no GPU. Everything is seeded.
 
-**Substrate**: emits a hash-chained NDJSON audit ledger, tracks MLflow runs
-(no-op when no server is configured), and exposes a deterministic canary the lab
-monitoring layer probes daily.
+**Substrate**: every run appends to a NDJSON log whose entries are linked by SHA-256. MLflow tracking is skipped when no server is set, and a canary smoke test is polled daily by the lab monitor.
 
-**Production framing**: methods in this class, perturbation effect modeling and
-response prediction (GEARS, CPA, scGen), are applied to real Perturb-seq screens
-in practice. This repository implements a transparent **linear baseline** of the
-method and the engineering on synthetic data. See
-[`docs/what-is-out-of-scope.md`](docs/what-is-out-of-scope.md).
+**Context**: GEARS, CPA, and scGen apply methods in this class to real Perturb-seq screens. This repo implements a transparent **linear baseline** on synthetic data. See [`docs/what-is-out-of-scope.md`](docs/what-is-out-of-scope.md).
 
 ---
 

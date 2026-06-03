@@ -1,7 +1,6 @@
 # Architecture
 
-One Python process, three method modules, three substrate hooks, the same
-house style as the rest of the capability-portrait portfolio.
+One Python process, three method modules, three substrate hooks.
 
 ## Control flow
 

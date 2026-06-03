@@ -1,4 +1,4 @@
-"""perturbresp: a perturbation-response capability portrait (Perturb-seq style).
+"""perturbresp: a Perturb-seq style perturbation-response proof of concept.
 
 A clean-room demonstration of two core tasks in single-cell perturbation biology:
 
