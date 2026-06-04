@@ -17,7 +17,7 @@ structure rather than fitting noise — the perturb-repo analogue of dmoi's
 We also report the effect-size ranking recovery (Spearman) and program-recovery
 F1 that the repo already computes — native interpretability that needs no model.
 
-Honest scope: synthetic, small (n_features default 8); importances are
+Caveats: synthetic, small (n_features default 8); importances are
 indicative and the ranking is a legibility/recovery check, not a feature-
 selection claim on real data.
 
@@ -111,7 +111,7 @@ def main() -> int:
         "| Rank | Feature | imp (observed) | imp (true) |\n|---|---|---|---|\n"
         + rank_rows + "\n\n"
         "Full table: `feature_importance_reliability.tsv`.\n\n"
-        "## Honest scope\n\n"
+        "## Caveats\n\n"
         "Synthetic data with a small feature embedding (default 8 dims); "
         "importances are indicative and this is a legibility / structure-recovery "
         "check, not a feature-selection claim on real perturbation data. The "
