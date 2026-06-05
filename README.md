@@ -4,7 +4,7 @@
 
 > **One principle, applied here.** Pick the smallest, most interpretable representation that could carry the signal; measure it against an honest baseline; report the verdict faithfully — whether the compact choice wins, ties, or loses. *That last step is why AI safety is needed: knowing a capability is real rather than a flattering benchmark.*
 >
-> In this repo: **representation** a low-dim perturbation embedding → ridge map → **baseline** a mean-response baseline (nonlinear GEARS/CPA is the named next step) → **verdict** linear *suffices for now*: held-out perturbation corr 0.60 vs 0.04 (lift +0.55).
+> In this repo: **representation** a low-dim perturbation embedding → ridge map → **baseline** a mean-response baseline (nonlinear GEARS/CPA is the named next step) → **verdict** linear *suffices for now*: held-out perturbation corr 0.60 vs 0.05 (lift +0.55).
 
 > All data is synthetic and deterministically generated. No patient data and no proprietary code or parameters are present in this repository.
 

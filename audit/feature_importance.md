@@ -29,9 +29,9 @@ Make the ridge feature→response model legible: which input feature dimensions 
 
 Full table: `feature_importance_reliability.tsv`.
 
-## Interpreting the demo
+## Limitations
 
-Data is synthetic with a small 8-dim feature embedding. Importances are indicative: this is a structure-recovery check, not a feature-selection claim on real perturbation data. The ground-truth comparison is only possible because the data is synthetic — on real Perturb-seq, the recovery check would be replaced by held-out predictive correlation (already reported in the pipeline).
+Synthetic data with a small feature embedding (default 8 dims); importances are indicative and this is a legibility / structure-recovery check, not a feature-selection claim on real perturbation data. The ground-truth comparison is only possible because the data is synthetic — on real Perturb-seq the recovery check would be replaced by held-out predictive correlation (already reported in the pipeline).
 
 ## Reproduce
 
