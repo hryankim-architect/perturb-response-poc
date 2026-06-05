@@ -53,7 +53,7 @@ network and no GPU. Everything is seeded.
 Reading: recovering a *seen* perturbation's program from differential
 expression is easy (F1 ≈ 0.99). The meaningful claim is the **held-out** task,
 predicting the response of perturbations the model never trained on. There the
-linear feature→response model reaches 0.60 correlation versus 0.04 for a mean
+linear feature→response model reaches 0.60 correlation versus 0.05 for a mean
 baseline, so the feature signal clearly generalizes; a 0.60 correlation is a
 modest number for a hard task, not a solved problem. These describe
 *this synthetic dataset*, not a real-screen benchmark.
