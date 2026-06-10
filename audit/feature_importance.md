@@ -1,6 +1,6 @@
 # Perturbation-response — feature-importance (interpretability) diagnostic
 
-Generated: 2026-06-02T20:58:11Z
+Generated: 2026-06-10T18:15:09Z
 
 ## Why
 
@@ -11,7 +11,8 @@ Make the ridge feature→response model legible: which input feature dimensions 
 
 ## Recovery validation (the key result)
 
-- **Spearman(importance_observed, importance_true) = 0.9762** — the ranking learned from the *noisy observed* delta vs the ranking implied by the *ground-truth* delta. High agreement ⇒ the model recovered the real feature→response structure, not noise.
+- **Importance-recovery Spearman = 0.929 across 10 seeds (range [0.857, 0.976]; seed 0 = 0.9762).** The ranking learned from the *noisy observed* delta vs the ranking implied by the *ground-truth* delta; high agreement ⇒ the model recovered the real feature→response structure, not noise.
+- **Caveat (report the distribution, not the best seed):** the true per-feature importances are near-flat (max/min = 1.21 over 8 features), so the Spearman is over barely-separated values and swings with the seed. The across-seed mean (0.929) is the honest figure; the single-seed 0.976 is the top of the range, not a representative result.
 - Effect-size ranking Spearman (native) = 0.9861; program-recovery F1 (native) = 0.9887.
 
 ## Per-feature importance
@@ -31,7 +32,7 @@ Full table: `feature_importance_reliability.tsv`.
 
 ## Limitations
 
-Synthetic data with a small feature embedding (default 8 dims); importances are indicative and this is a legibility / structure-recovery check, not a feature-selection claim on real perturbation data. The ground-truth comparison is only possible because the data is synthetic — on real Perturb-seq the recovery check would be replaced by held-out predictive correlation (already reported in the pipeline).
+Synthetic data with a small feature embedding (default 8 dims); importances are indicative and this is a legibility / structure-recovery check, not a feature-selection claim on real perturbation data. The ground-truth comparison is only possible *because* the data is synthetic — on real Perturb-seq the recovery check would be replaced by held-out predictive correlation (already reported in the pipeline).
 
 ## Reproduce
 

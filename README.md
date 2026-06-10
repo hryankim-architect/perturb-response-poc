@@ -96,10 +96,14 @@ feature→response model legible: per-feature importance is the aggregated
 \|coefficient\| across gene outputs. Because the data is synthetic we can validate
 it against ground truth — the importance ranking learned from the *noisy observed*
 delta matches the ranking implied by the *true* generative delta at **Spearman
-0.976**, evidence the model recovered the real feature→response structure rather
-than fitting noise (alongside the native effect-size-ranking Spearman 0.986 and
-program-recovery F1 0.989). Synthetic and small (8-dim embedding), so this is a
-legibility / structure-recovery check, not a feature-selection claim on real data.
+0.93 on average across 10 seeds (range 0.86–0.98; seed 0 = 0.976)**, evidence the
+model recovered the real feature→response structure rather than fitting noise.
+Reported as a distribution on purpose: the true per-feature importances are
+near-flat (max/min ≈ 1.2 over 8 features), so the rank correlation swings with the
+seed and a single value would be a cherry-pick. Alongside the native
+effect-size-ranking Spearman 0.986 and program-recovery F1 0.989. Synthetic and
+small (8-dim embedding), so this is a legibility / structure-recovery check, not a
+feature-selection claim on real data.
 
 ## On real data
 
